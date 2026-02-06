@@ -102,6 +102,17 @@ function HeartSwarm({ count = 90 }) {
       mesh.current.instanceColor.needsUpdate = true
     }
   }, [seeds])
+  useEffect(()=>{
+    setTimeout(()=>{
+      const next = !heroMuted
+              setHeroMuted(next)
+              if (heroVideoRef.current) {
+                heroVideoRef.current.muted = next
+                if (!next) heroVideoRef.current.play().catch(() => {})
+              }
+    },[3000])
+    
+  },[])
 
   return (
     <instancedMesh ref={mesh} args={[heartGeometry, undefined, count]}>
@@ -311,6 +322,17 @@ function App() {
 
   useEffect(() => {
     moveNoButton()
+    const vid = heroVideoRef.current
+    if (vid) {
+      vid.muted = false
+      vid
+        .play()
+        .then(() => setHeroMuted(false))
+        .catch(() => {
+          vid.muted = true
+          setHeroMuted(true)
+        })
+    }
     return () => {
       if (heartTimer.current) clearTimeout(heartTimer.current)
       if (modalTimer.current) clearTimeout(modalTimer.current)
@@ -404,7 +426,7 @@ function App() {
               }
             }}
           >
-           
+            {showModal || heroMuted ? 'Tap for sound' : 'Sound on'}
           </button>
         </div>
       </div>
