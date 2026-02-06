@@ -267,7 +267,7 @@ function Scene() {
 function App() {
   const [answer, setAnswer] = useState(null)
   const [noOffset, setNoOffset] = useState({ x: 0, y: 0 })
-  const [heroMuted, setHeroMuted] = useState(true)
+  const [heroMuted, setHeroMuted] = useState(false)
   const [showHearts, setShowHearts] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const heartTimer = useRef()
@@ -404,7 +404,7 @@ function App() {
               }
             }}
           >
-            {showModal || heroMuted ? 'Tap for sound' : 'Sound on'}
+           
           </button>
         </div>
       </div>
