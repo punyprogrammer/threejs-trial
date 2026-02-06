@@ -267,10 +267,12 @@ function Scene() {
 function App() {
   const [answer, setAnswer] = useState(null)
   const [noOffset, setNoOffset] = useState({ x: 0, y: 0 })
+  const [heroMuted, setHeroMuted] = useState(true)
   const [showHearts, setShowHearts] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const heartTimer = useRef()
   const modalTimer = useRef()
+  const heroVideoRef = useRef(null)
   const hearts = useMemo(
     () =>
       new Array(40).fill(0).map((_, i) => ({
@@ -294,12 +296,17 @@ function App() {
 
   const handleYes = () => {
     setAnswer('yes')
+    setHeroMuted(false)
+    if (heroVideoRef.current) {
+      heroVideoRef.current.muted = false
+      heroVideoRef.current.play().catch(() => {})
+    }
     setShowHearts(true)
     setShowModal(true)
     if (heartTimer.current) clearTimeout(heartTimer.current)
     if (modalTimer.current) clearTimeout(modalTimer.current)
     heartTimer.current = setTimeout(() => setShowHearts(false), 5000)
-    modalTimer.current = setTimeout(() => setShowModal(false), 3000)
+    modalTimer.current = setTimeout(() => setShowModal(false), 4000)
   }
 
   useEffect(() => {
@@ -380,11 +387,25 @@ function App() {
             src="/main.mp4"
             autoPlay
             loop
-            muted
+            muted={showModal || heroMuted}
             playsInline
             controls={false}
+            ref={heroVideoRef}
           />
-          
+          <button
+            className="sound-toggle"
+            type="button"
+            onClick={() => {
+              const next = !heroMuted
+              setHeroMuted(next)
+              if (heroVideoRef.current) {
+                heroVideoRef.current.muted = next
+                if (!next) heroVideoRef.current.play().catch(() => {})
+              }
+            }}
+          >
+            {showModal || heroMuted ? 'Tap for sound' : 'Sound on'}
+          </button>
         </div>
       </div>
     </div>
