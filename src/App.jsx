@@ -354,8 +354,8 @@ function App() {
           Will you be my <span>Valentine</span>?
         </h1>
         <p className="sub">
-          Kurumi, Cinnamoroll, and Hello Kitty are already dancing. Say yes and unleash extra
-          sparkles!
+          Cinnamoroll, Pompompurin, Pochacco, Badtz-Maru, and Keroppi are already dancing. Say yes
+          and unleash extra sparkles!
         </p>
         <div className="buttons">
           <button className="yes" onClick={handleYes}>
