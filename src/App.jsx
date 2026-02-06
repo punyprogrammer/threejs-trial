@@ -299,7 +299,7 @@ function App() {
     if (heartTimer.current) clearTimeout(heartTimer.current)
     if (modalTimer.current) clearTimeout(modalTimer.current)
     heartTimer.current = setTimeout(() => setShowHearts(false), 5000)
-    modalTimer.current = setTimeout(() => setShowModal(false), 10000)
+    modalTimer.current = setTimeout(() => setShowModal(false), 3000)
   }
 
   useEffect(() => {
